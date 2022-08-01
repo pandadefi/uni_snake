@@ -1,0 +1,3 @@
+name: uni_snek
+plugins:
+  - name: vyper
