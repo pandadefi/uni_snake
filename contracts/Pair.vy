@@ -196,17 +196,8 @@ def getReserves() -> (uint112, uint112, uint32):
 
 @internal
 def _safeTransfer(token: address, to: address, _value: uint256):
-    response: Bytes[32] = raw_call(
-        token,
-        concat(
-            SELECTOR,
-            convert(to, bytes32),
-            convert(_value, bytes32),
-        ),
-        max_outsize=32,
-    )
-    if len(response) > 0:
-        assert convert(response, bool), "UniswapV2: TRANSFER_FAILED"
+    sucess: bool = ERC20(token).transfer(to, _value, default_return_value=True)
+    assert sucess, "UniswapV2: TRANSFER_FAILED"
 
 @internal
 def _update(balance0: uint256, balance1: uint256, reserve0: uint112, reserve1: uint112):
