@@ -2,7 +2,7 @@
 
 feeTo: public(address)
 feeToSetter: public(address)
-bluePrint: public(address)
+BLUEPRINT: immutable(address)
 
 getPair: public(HashMap[address, HashMap[address, address]])
 allPairs: public(address[1_000_000])
@@ -16,7 +16,7 @@ event PairCreated:
 
 @external
 def __init__(bluePrint: address, _feeToSetter: address):
-    self.bluePrint = bluePrint
+    BLUEPRINT = bluePrint
     self.feeToSetter = _feeToSetter
 
 @external
@@ -34,7 +34,7 @@ def createPair(tokenA: address, tokenB: address) -> address:
     assert token0 != empty(address), 'UniswapV2: ZERO_ADDRESS'
     assert self.getPair[token0][token1] == empty(address), 'UniswapV2: PAIR_EXISTS'
     salt: bytes32 = keccak256(_abi_encode(token0, token1))
-    pair: address = create_from_blueprint(self.bluePrint, token0, token1, salt=salt)
+    pair: address = create_from_blueprint(self.BLUEPRINT, token0, token1, salt=salt)
     self.getPair[token0][token1] = pair
     self.getPair[token1][token0] = pair
     self.allPairs[self.allPairsLength] = pair
