@@ -1,4 +1,4 @@
-# @version 0.3.4
+# @version 0.3.7
 
 feeTo: public(address)
 feeToSetter: public(address)
@@ -34,7 +34,7 @@ def createPair(tokenA: address, tokenB: address) -> address:
     assert token0 != empty(address), 'UniswapV2: ZERO_ADDRESS'
     assert self.getPair[token0][token1] == empty(address), 'UniswapV2: PAIR_EXISTS'
     salt: bytes32 = keccak256(_abi_encode(token0, token1))
-    pair: address = create_from_blueprint(self.BLUEPRINT, token0, token1, salt=salt)
+    pair: address = create_from_blueprint(BLUEPRINT, token0, token1, code_offset=3, salt=salt)
     self.getPair[token0][token1] = pair
     self.getPair[token1][token0] = pair
     self.allPairs[self.allPairsLength] = pair

@@ -1,3 +1,11 @@
 name: uni_snek
 plugins:
   - name: vyper
+  - name: hardhat
+
+hardhat:
+  port: 8545
+
+ethereum:
+  local:
+    default_provider: hardhat
